@@ -8,12 +8,26 @@ module.exports = {
 };
 
 function find() {
-  return db("users").select("id", "username").orderBy("id");
+  return db("users as u")
+    .join("roles as r", "u.role", "r.id")
+    .select("u.id", "u.username", "r.name as role")
+    .orderBy("u.id");
 }
 
 function findBy(filter) {
-  return db("users").where(filter).orderBy("id");
+  return db("users")
+    .first()
+    .where(filter)
 }
+
+// function findBy(filter) {
+//   console.log("filter", filter);
+//   return db("users as u")
+//     .join("roles as r", "u.role", "r.id")
+//     .where(filter)
+//     .select("u.id", "u.username", "r.name as role", "u.password")
+//     .orderBy("u.id");
+// }
 
 async function add(user) {
   try {
