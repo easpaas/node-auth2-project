@@ -16,6 +16,8 @@ router.post("/register", (req, res) => {
 
     credentials.password = hash;
 
+    // TODO token
+
     // save the user to the database
     Users.add(credentials)
       .then(user => {
